@@ -5,27 +5,93 @@
 \usetheme{Dresden}
 \usecolortheme{default}
 
-\title[Presentation] % OPTIONAL: only for long titles
-{Sample Presentation in LaTeX}
+\title[Polytropes] % OPTIONAL: only for long titles
+{Polytropic Models of White Dwarfs}
 \subtitle{Examples for use of the beamer package}
 \author[Conn, Hurley] % OPTIONAL: for multiple authors
 {Erin Conn \and Matthew Hurley}
 \subject{Polytropes}
 
+\AtBeginSubsection[]
+{
+    \begin{frame}<beamer>
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection,currentsubsection]
+    \end{frame}
+}
+
 \begin{document}
 
     \frame{\titlepage}
-    
-    \begin{frame}
-        \frametitle{Sample}
 
-        \textbf{Binomial Theorem}
+    \section{Theory}
 
-        The roots of a binomial \(ax^2+bx+c=0\) may be found with the
-        following formula:
+        \subsection{Polytropes}
 
-        \[ \frac{-b \pm \sqrt{b^2-4ac}}{2a} \]
+        \begin{frame}
+            \frametitle{What are polytropes?}
 
-    \end{frame}
+            Solutions to...
+
+            \textbf{The Lane-Emden Equation}
+
+            \[\frac{1}{\xi^2}\frac{d}{d\xi}\left(\xi^2\frac{d\theta}{d\xi}\right)=-\theta^n(\xi) \]
+
+            A dimensionless, 2nd order nonlinear differential equation relating the
+            pressure of a spherically-symmetric gas distribution to the radius.
+
+        \end{frame}
+
+%        \begin{frame}
+%            \frametitle{Derivation - 1}
+%
+%            Can be derived multiple ways. From laws of mass conservation and
+%            hydrostatic equilibrium:
+%
+%            \begin{align*}
+%                dM(r) &= 4\pi r^2\rho(r)dr \rightarrow \frac{dM(r){dr}=4\pi r^2\rho(r) \\
+%                \frac{dP(r)}{dr} &= -\frac{\rho(r)GM(r)}{r^2}
+%            \end{align*}
+%
+%            These equations are related by multiplying the hydrostatic equation by
+%            \(r^2/\rho\) and differentiating:
+%
+%            \[\frac{d}{dr}\left(\frac{r^2}{\rho(r)}\frac{dP(r)}{dr}\right)=-G\frac{dM(r)}{dr}\]
+%
+%            Yielding Poisson's equation for gravity:
+%
+%            \[\frac{1}{r^2}\frac{d}{dr}\left(\frac{r^2}{\rho(r)}\frac{dP(r)}{dr}\right)=-4\piG\rho(r)\]
+%
+%        \end{frame}
+
+        \subsection{White Dwarfs}
+
+        \begin{frame}
+            \frametitle{Placeholder}
+
+        \end{frame}
+
+    \section{Methods}
+
+        \begin{frame}
+            \frametitle{Alternate form of the Lane-Emden Equation}
+
+            The Lane-Emden Equation may also be written:
+
+            \[\frac{d^2\theta}{d\xi^2}+\frac{2}{\theta}\frac{d\theta}{d\xi}=-\theta^n(\xi)\]
+
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Translating to a system of 1st order equations}
+
+            Translating this form to a system of 1st order equations:
+
+            \begin{align*}
+                \phi &= \frac{d\theta}{d\xi} \\
+                \frac{d\phi}{d\xi} &= -\frac{2}{\xi}\phi - \theta^n
+            \end{align*}
+
+        \end{frame}
 
 \end{document}
