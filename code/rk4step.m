@@ -1,15 +1,3 @@
-% Homework #7
-% function y = rk4step(y,f,x,h)
-%
-% Advancing solution by one single RK4 step.
-%
-% input:
-%   y      : initial y value, scalar
-%   f      : inline function (RHS of ODE)
-%   x      : starting x.
-%   h      : stepsize
-% output:
-%   y      : updated result
 %---------------------------------------
 
 function u = rk4step(u,f,x,h)
