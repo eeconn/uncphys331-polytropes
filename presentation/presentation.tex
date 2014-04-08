@@ -12,6 +12,15 @@
 {Erin Conn \and Matthew Hurley}
 \subject{Polytropes}
 
+\AtBeginSection[]
+{
+        \begin{frame}<beamer>
+            \frametitle{Table of Contents}
+            \tableofcontents[currentsection]
+        \end{frame}
+}
+
+
 \AtBeginSubsection[]
 {
     \begin{frame}<beamer>
@@ -35,14 +44,32 @@
 
             \textbf{The Lane-Emden Equation}
 
-            \[\frac{1}{\xi^2}\frac{d}{d\xi}\left(\xi^2\frac{d\theta}{d\xi}\right)=-\theta^n(\xi) \]
+            \begin{equation}
+                \frac{1}{\xi^2}\frac{d}{d\xi}\left(\xi^2\frac{d\theta}{d\xi}\right)=-\theta^n(\xi)
+            \end{equation} 
 
             A dimensionless, 2nd order nonlinear differential equation relating the
             pressure of a spherically-symmetric gas distribution to the radius.
 
         \end{frame}
 
+        \begin{frame}
+            \frametitle{Definitions}
+
+            \begin{definition}
+                \alert{Polytropic process} - Thermodynamic process that obeys the relation
+                
+                \[Pv^n=C\]
+            \end{definition} 
+
+            \begin{definition}
+                \alert{Polytropic index} - Constant that relates pressure of a polytropic fluid to its volume (density). It may be any real number.
+            \end{definition}
+
+        \end{frame}
+
 %        \begin{frame}
+%        %commenting this frame out for now; it's making pdflatex choke for some reason
 %            \frametitle{Derivation - 1}
 %
 %            Can be derived multiple ways. From laws of mass conservation and
@@ -76,21 +103,31 @@
         \begin{frame}
             \frametitle{Alternate form of the Lane-Emden Equation}
 
-            The Lane-Emden Equation may also be written:
-
-            \[\frac{d^2\theta}{d\xi^2}+\frac{2}{\theta}\frac{d\theta}{d\xi}=-\theta^n(\xi)\]
+            \[\frac{d^2\theta}{d\xi^2}+\frac{2}{\xi}\frac{d\theta}{d\xi}=-\theta^n(\xi)\]
 
         \end{frame}
 
         \begin{frame}
             \frametitle{Translating to a system of 1st order equations}
 
-            Translating this form to a system of 1st order equations:
-
             \begin{align*}
                 \phi &= \frac{d\theta}{d\xi} \\
                 \frac{d\phi}{d\xi} &= -\frac{2}{\xi}\phi - \theta^n
             \end{align*}
+
+        \end{frame}
+
+    \section{Results}
+
+        \begin{frame}
+            \frametitle{Placeholder}
+
+        \end{frame}
+
+    \section{Discussion}
+
+        \begin{frame}
+            \frametitle{Questions?}
 
         \end{frame}
 
