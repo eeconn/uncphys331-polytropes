@@ -4,10 +4,13 @@
 
 \usetheme{Dresden}
 \usecolortheme{default}
+\usefonttheme{serif}
+\usefonttheme[onlylarge]{structuresmallcapsserif}
+%\usefonttheme[onlysmall]{structurebold}
 
 \title[Polytropes] % OPTIONAL: only for long titles
 {Polytropic Models of White Dwarfs}
-\subtitle{Examples for use of the beamer package}
+\subtitle{UNC PHYS 331 Project}
 \author[Conn, Hurley] % OPTIONAL: for multiple authors
 {Erin Conn \and Matthew Hurley}
 \subject{Polytropes}
@@ -44,12 +47,25 @@
 
             \textbf{The Lane-Emden Equation}
 
-            \begin{equation}
+            \[
                 \frac{1}{\xi^2}\frac{d}{d\xi}\left(\xi^2\frac{d\theta}{d\xi}\right)=-\theta^n(\xi)
-            \end{equation} 
+            \]
 
             A dimensionless, 2nd order nonlinear differential equation relating the
             pressure of a spherically-symmetric gas distribution to the radius.
+
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Why polytropes?}
+
+            \begin{itemize}
+                \item Provide simplified stellar models - simple pressure/density relation
+                    \pause
+                \item Easier to solve than full equations of stellar structure
+                    \pause
+                \item Require less computational effort - some analytic solutions even exist!
+            \end{itemize}
 
         \end{frame}
 
@@ -59,42 +75,91 @@
             \begin{definition}
                 \alert{Polytropic process} - Thermodynamic process that obeys the relation
                 
-                \[Pv^n=C\]
+                \[PV^n=C\]
             \end{definition} 
-
+                    \pause
             \begin{definition}
                 \alert{Polytropic index} - Constant that relates pressure of a polytropic fluid to its volume (density). It may be any real number.
+            \end{definition}
+            \pause
+            \begin{definition}
+                \alert{Poisson's equation} Relates a force density function to a potential field
+                    \[\nabla^2\Phi=f\]
             \end{definition}
 
         \end{frame}
 
-%        \begin{frame}
-%        %commenting this frame out for now; it's making pdflatex choke for some reason
-%            \frametitle{Derivation - 1}
-%
-%            Can be derived multiple ways. From laws of mass conservation and
-%            hydrostatic equilibrium:
-%
-%            \begin{align*}
-%                dM(r) &= 4\pi r^2\rho(r)dr \rightarrow \frac{dM(r){dr}=4\pi r^2\rho(r) \\
-%                \frac{dP(r)}{dr} &= -\frac{\rho(r)GM(r)}{r^2}
-%            \end{align*}
-%
-%            These equations are related by multiplying the hydrostatic equation by
-%            \(r^2/\rho\) and differentiating:
-%
-%            \[\frac{d}{dr}\left(\frac{r^2}{\rho(r)}\frac{dP(r)}{dr}\right)=-G\frac{dM(r)}{dr}\]
-%
-%            Yielding Poisson's equation for gravity:
-%
-%            \[\frac{1}{r^2}\frac{d}{dr}\left(\frac{r^2}{\rho(r)}\frac{dP(r)}{dr}\right)=-4\piG\rho(r)\]
-%
-%        \end{frame}
+        \begin{frame}
+            \frametitle{Derivation 1: Poisson Equation}
+            % Skip this and the next 2 slides if pressed for time
+            % Look up how to add skip buttons
+            Can be derived multiple ways. From laws of mass conservation and
+            hydrostatic equilibrium:
+            \pause
+            \[ \begin{array}{l l}
+                dM(r) &= 4\pi r^2\rho(r)dr \rightarrow \frac{dM(r)}{dr}=4\pi r^2\rho(r) \\
+                \pause
+                \frac{dP(r)}{dr} &= -\frac{\rho(r)GM(r)}{r^2}
+                \end{array}
+            \]
+            \pause
+            These equations are related by multiplying the hydrostatic equation by
+            \(r^2/\rho\) and differentiating:
+            \pause
+            \[\frac{d}{dr}\left(\frac{r^2}{\rho(r)}\frac{dP(r)}{dr}\right)=-G\frac{dM(r)}{dr}\]
+            \pause
+            Yielding Poisson's equation for gravity:
+            \pause
+            \[ \frac{1}{r^2} \frac{d}{dr} \left( \frac{r^2}{\rho(r)} \frac{dP(r)}{dr} \right) =-4 \pi G \rho(r) \]
+        \end{frame}
+        \begin{frame}
+            \frametitle{Derivation 2: Working towards a dimensionless form}
+
+            Define a polytropic state equation:
+            \pause
+            \[ P=K\rho^{\frac{n+1}{n}} \]
+            \pause
+            Make it dimensionless:
+            \[\theta^n\equiv\frac{\rho}{\rho_c} \]
+            \pause
+            \[ P(r)=K\rho_c^{\frac{n+1}{n}}\theta^{n+1}(r)=P_c\theta^{n+1}(r) \]
+            \pause
+            Substitute into Poisson and simplify:
+            \pause
+            \[\frac{(n+1)P_c}{4\pi G\rho_c^2}\frac{1}{r^2}\frac{d}{dr}\left(r^2\frac{d\theta(r)}{dr}\right)=-\theta^n(r) \]
+
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Derivation 3: More simplification}
+
+            Define a new variable:
+            \pause
+            \[\alpha^2 \equiv \frac{(n+1)P_c}{4\pi G\rho_c^2}\]
+            \pause
+            Use it to define a dimensionless radius:
+            \pause
+            \[\xi \equiv \frac{r}{\alpha}\]
+            \pause
+            Substitute into the simplified Poisson:
+            \pause
+            \[\frac{1}{\xi^2}\frac{d}{d\xi}\left(\xi^2\frac{d\theta(\xi)}{d\xi}\right)=-\theta^n(\xi)\]
+
+        \end{frame}
 
         \subsection{White Dwarfs}
 
         \begin{frame}
             \frametitle{Placeholder}
+
+            Something about degenerate matter and how polytropic models suit it?
+
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Placeholder}
+
+            Relativistic vs. Non-Relativistic?
 
         \end{frame}
 
@@ -103,17 +168,57 @@
         \begin{frame}
             \frametitle{Alternate form of the Lane-Emden Equation}
 
-            \[\frac{d^2\theta}{d\xi^2}+\frac{2}{\xi}\frac{d\theta}{d\xi}=-\theta^n(\xi)\]
+            \[\frac{d^2\theta}{d\xi^2}=-\frac{2}{\xi}\frac{d\theta}{d\xi}-\theta^n(\xi)\]
 
         \end{frame}
 
         \begin{frame}
             \frametitle{Translating to a system of 1st order equations}
 
-            \begin{align*}
+            \[
+                \left\{ \begin{array}{l l}
                 \phi &= \frac{d\theta}{d\xi} \\
                 \frac{d\phi}{d\xi} &= -\frac{2}{\xi}\phi - \theta^n
-            \end{align*}
+                \end{array} \right.
+           \]
+
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Boundary Values}
+
+            Obtained from central density and hydrostatic equation
+
+            % look up how to itemize & put in a box
+            \[
+                \begin{array}{l l}
+                    \xi &= 0 \\
+                    \theta &= 1 \\
+                    \frac{d\theta}{d\xi} &= 0
+                \end{array}
+            \]
+
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Runge-Kutta Solution}
+
+        \end{frame}
+
+        \begin{frame}
+           \frametitle{Problem!}
+
+            Singularity at \(\xi_0=0\):
+
+            \[ \phi'=-\left(\frac{2}{\xi_0}\phi\right)-\theta_0^n\]
+
+            Need to work around this somehow:
+            \pause
+            \begin{itemize}
+                \item Taylor expand at \(\xi=0\) and take limit as \(\xi\rightarrow 0\): \(\phi'\rightarrow -\frac{1}{3}\)
+                \pause
+                \item Offset the starting point: \(0< \xi_0 \ll 1\)
+            \end{itemize}
 
         \end{frame}
 
