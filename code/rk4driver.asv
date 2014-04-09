@@ -3,6 +3,7 @@ clear;
 close all;
 %===================================
 %-----------------------------------
+n     = ???;  % polytropic index
 nstep = 10;   % number of steps
 iinteg= 0;    % type of integrator; Not needed now, but I left it in there.
 xs    = 0.0000001;  % starting x. Singularity
