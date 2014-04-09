@@ -1,0 +1,180 @@
+\documentclass{article}
+
+\usepackage{geometry}
+\usepackage{amsmath,fixltx2e,graphicx,float,ifpdf,hyperref}
+\usepackage[USenglish]{isodate}
+\geometry{letterpaper}
+
+%% Create a command \e for scientific notation: MANTISSA\e{EXPONENT}
+%% will display as MANTISSA x 10^{EXPONENT}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+
+%% Create a command \HRule to create a 0.5mm wide horizontal rule across the
+%% page
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+%% Use the displaymath style in all math environments, including inline.
+%% may make some lines taller but makes for more readable sums, integrations,
+%% etc.
+\everymath{\displaystyle}
+
+\begin{document}
+
+    \section{Numerical Recipes:}
+
+    \subsection{Standard BVP problem}
+
+        Desire a solution to set of \(N\) coupled 1st order ODES satisfying
+        \(n_1\) boundary conditions at starting point \(x_1\) and a remaining
+        set of \(n_2=N-n_1\) conditions at final point \(x_2\). (Recall all DEs
+        of order higher than 1 can be written as coupled sets of 1st order)
+
+        Equations are:
+
+        \begin{equation}
+            \frac{dy_i(x)}{dx}=g_i(x,y_1,y_2,\dotsc ,y_n)\quad i=1,2,\dotsc ,N
+        \end{equation}
+
+        For a \textit{free boundary problem}:
+        Only one boundary abcissa \(x_1\) is specified, while other boundary
+        \(x_2\) is TBD so system has a solution satisfying total of \(N+1\)
+        conditions. Add an extra constant dependent variable:
+
+        \begin{equation}
+            y_{N+1}\equiv x_2-x_1
+        \end{equation}
+
+        And another equation:
+
+        \begin{equation}
+            \frac{dy_{n+1}}{dx}=0
+        \end{equation}
+
+        And also define new independent variable \(t\):
+
+        \begin{equation}
+            t_{y_{N+1}}\equiv x-x_1,\quad 0\le t\le 1
+        \end{equation}
+
+        This is now a system of \(N+1\) differential equations for \(dy_i/dt\)
+        in standard form with \(t\) varying between known limits 0 and 1.
+
+        \begin{equation}
+            \frac{dy_i}{dt} = g_i(t,x,y_1,y_2,\dotsc ,y_n),\quad i=1,2,\dotsc ,N+1
+        \end{equation}
+
+    \subsection{How does this apply to our problem?}
+
+        We do not know what the radius \(\xi_2\) of the star is, only that
+        \(\theta\) must go to 0 at some point. We therefore have a free-boundary
+        problem with an unknown \(\xi_2\) and a known condition at that point.
+
+        Our original differential equation, rearranged into homogenous form:
+
+        \begin{equation}
+            \frac{d^2\theta(\xi)}{d\xi^2} +
+            \frac{2}{\xi}\frac{d\theta(\xi)}{d\xi} + \theta^n(\xi)=0
+        \end{equation}
+
+        Rearranged into a system of 1st-order equations:
+
+        \begin{equation}
+            \left\{
+            \begin{array}{l}
+                \frac{d\theta}{d\xi}=z \\
+                \frac{dz}{d\xi}=-\frac{2}{\xi}z-\theta^n
+            \end{array}\right.
+        \end{equation}
+
+        So I guess we add this new differential equation in?
+
+        \[
+            \left\{
+            \begin{array}{l}
+                x=\xi \\
+                y_1=\theta \\
+                y_2=z \\
+                y_3=x_2-x_1 \\
+                t=x-x_1
+            \end{array}
+            \right.
+        \]
+
+        \begin{equation}
+            \left\{
+            \begin{array}{l}
+                \frac{dy_1}{dt}=y_2\frac{dx}{dt} \\
+                \frac{dy_2}{dt}=-2x y_2\frac{dx}{dt}-? \\
+                \frac{dy_3}{dt}=0
+            \end{array}
+            \right.
+        \end{equation}
+
+    \section{\href{http://www.vikdhillon.staff.shef.ac.uk/teaching/phy213/phy213_le.html}{Sheffield online lecture notes}}
+
+    \subsection{\href{http://www.vikdhillon.staff.shef.ac.uk/teaching/phy213/phy213_polytropes.html}{Boundary values}}
+
+    Lane-Emden in form:
+
+    \begin{equation}
+        \left(\frac{1}{\xi^2}\right)\frac{d}{d\xi}\left(\xi^2\frac{d\theta}{d\xi}\right)=-\theta^n
+    \end{equation}
+
+    To solve, need 2 boundary conditions. At center \(\left(\xi = 0 \right)\),
+    \(\rho=\rho_c\) and hence \(\theta=1\). 2nd condition follows from equation
+    of hydrostatic support in which \(\frac{M}{r^2}\rightarrow 0\) as
+    \(r\rightarrow 0\). This means \(\frac{dP}{dr}=0\) at \(r=0\), and from the
+    polytropic equation of state, \(\frac{d\theta}{d\xi}=0\) at \(\xi=0\).
+
+    \subsection{How to solve with these conditions?}
+
+    \emph{This looks like Euler's method, not the most accurate, but we can
+    probably easily extend this to RK4.}
+
+    Express Lane-Emden in form
+
+    \begin{equation}
+        \frac{d^2\theta}{d\xi^2} =
+        -\left(\frac{2}{\xi}\frac{d\theta}{d\xi}\right)-\theta^n
+        \label{eq:leshef}
+    \end{equation}
+
+    Step outward from radius from the center and evaluate density at each
+    radius. Value of the density \(\theta_{i+1}\) given by value of density at
+    the previous radius \(\theta_i\) plus the change in density at each step.
+
+    \begin{equation}
+        \theta_{i+1}=\theta_i+\Delta\xi \left(\frac{d\theta}{d\xi}\right)_{i+1}
+    \end{equation}
+
+    The rate of change of density with radius \(\frac{d\theta}{d\xi}\) is an
+    unknown in the above equation. To determine \emph{its} value, use the same
+    technique:
+
+    \begin{equation}
+        \left(\frac{d\theta}{d\xi}\right)_{i+1}=\left(\frac{d\theta}{d\xi}\right)_{i} +
+        \Delta\xi\frac{d^2\theta}{d\xi^2}
+    \end{equation}
+    
+    The \(\frac{d^2\theta}{d\xi^2}\) term is given by eq.~\ref{eq:leshef}:
+
+    \begin{equation}
+        \left(\frac{d\theta}{d\xi}\right)_{i+1} =
+        \left(\frac{d\theta}{d\xi}\right)_i-\left(\frac{2}{\xi_i}\left(\frac{d\theta}{d\xi}\right)_i+\theta_i^n\right)\Delta\xi
+    \end{equation}
+
+    Numerical integration for a particular polytropic index \(n\) can proceed as
+    follows:
+
+    Starting at the center, at which values of \(\xi,\frac{d\theta}{d\xi},\text{
+    and}\theta\) are known because of the boundary conditions given above,
+    determine \(\left(\frac{d\theta}{d\xi}\right)_{i+1}\). This value is used to determine
+    \(\theta_{i+1}\). The radius is incremented by adding \(\Delta\xi\text{ to}
+    \xi\) and the process repeated until the surface is reached (when \(\theta\)
+    becomes negative).
+
+    In the online notes
+    \(\Delta\xi=0.001\) and \(\xi_0=10\e{-5}\) to avoid singularity
+    at origin.
+        
+\end{document}
