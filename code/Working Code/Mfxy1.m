@@ -1,6 +1,6 @@
 function [dy] = Mfxy1(x,y)
 
-  n  = 3;%1,2,4,5
+  n  = 3;%1,1.5,2,4,5
   dy = zeros(2,1);
 
   dy(1) = y(2);
