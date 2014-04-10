@@ -1,0 +1,23 @@
+% Homework #7b
+% Driver for ode_fixedstep
+clc
+clear;
+close all;
+%===================================
+% (7b)
+%-----------------------------------
+n = 3;
+h = 0.001;
+y0 = [1.0 0];
+x0 = 0.0001;
+x1 = 15;
+f = @Mfxy1;
+%==========================================
+
+[x,yrk4] = newodesolverstep(iter,f,x0,y0,2);
+
+plot(x,yrk4)
+fprintf(1,'Enter to continue...\n');
+pause;
+
+
