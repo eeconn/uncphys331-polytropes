@@ -1,7 +1,7 @@
 \documentclass{article}
 
 \usepackage{geometry}
-\usepackage{amsmath,fixltx2e,graphicx,float,ifpdf,hyperref}
+\usepackage{amsmath,amsthm,fixltx2e,graphicx,float,ifpdf,hyperref}
 \usepackage[USenglish]{isodate}
 \geometry{letterpaper}
 
@@ -17,6 +17,9 @@
 %% may make some lines taller but makes for more readable sums, integrations,
 %% etc.
 \everymath{\displaystyle}
+
+%% Define theorem environment
+\newtheorem{thm}{Theorem}
 
 \begin{document}
 
@@ -176,5 +179,32 @@
     In the online notes
     \(\Delta\xi=0.001\) and \(\xi_0=10\e{-5}\) to avoid singularity
     at origin.
-        
+
+    \section{Mass-Radius Relation}
+
+        \begin{align*}
+            M_*&=\int_0^{R_*}{4\pi r^2 \rho(r)}dr \\
+               &=4\pi\alpha^3\rho_c\int_0^{\xi_0}{\xi^2\theta^n(\xi)}d\xi
+        \end{align*}
+
+        We'll need to  know \(\alpha\) and \(\rho_c\). We'll also need to use a
+        numerical integrator for this part as well, since we only have a
+        numerical solution.
+
+        \begin{thm}
+            Simpson's rule:
+
+            Uses quadratic interpolation to numerically integrate over a region
+
+            \[\int_a^b{f(x)}dx\approx\frac{b-a}{6}\left[f(a)+4f\left(\frac{a+b}{2}\right)+f(b)\right]\]
+        \end{thm}
+
+        \begin{align*}
+            \alpha^2&=\frac{(n+1)P_c}{4\pi G\rho_c^2} \\
+            P_c&=K\rho_c^{\frac{n+1}{n}}
+        \end{align*}
+
+        Does this mean we need to know K as well?
+
+
 \end{document}
