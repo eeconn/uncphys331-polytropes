@@ -22,6 +22,10 @@ f2   = @nonrel;
 [x1s,y1s] = lesolve(iter,f1,x0,y0,h,2);
 [x2s,y2s] = lesolve(iter,f2,x0,y0,h,2);
 
+% write to .csv files for use with external applications
+csvwrite('nonrel.csv',[x1s,y1s]);
+csvwrite('rel.csv',[x2s,y2s]);
+
 % Plot the solutions on the same graph
 figure('Name','Comparison of non-relativistic and relativistic solutions','NumberTitle','off')
 hold all
