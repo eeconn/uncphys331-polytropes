@@ -50,14 +50,19 @@ relint = trapz(x2s,y2s(1,:));
 
 % This gives us the total mass of the star, but not a plot of mass vs. radius.
 % Need to define alpha and centdens (central density)
-%nonrelMass = 4*pi*alpha^3*centdens*nonrelint;
-%relMass = 4*pi*alpha^3*centdens*relint;
+%nonrelMass = 4*pi*alpha(n,centdens,centP)^3*centdens*nonrelint;
+%relMass = 4*pi*alpha(n,centdens,centP)^3*centdens*relint;
 
 
 % r1 - radius values for non-relativistic gas
 % r2 - radius values for relativistic gas
+%r1 = alpha(n,centdens,centP)*x1s;
+%r2 = alpha(n,centdens,centP)*x2s;
+
 % mr1 - M(r) (non-relativistic)
 % mr2 - M(r) (relativistic)
+% For these - use LE derivation to get density function, then integrate for
+% each r value?
 %
 % Plot mass/radius relationship in terms of solar masses & kilometers
 % figure('Name','Mass - Radius Relation')
