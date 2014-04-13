@@ -36,3 +36,15 @@ pause;
 
 % Insert Mass-Radius Relationship and Plot
 
+% Take the definite integral of x^2 y^n dx from x0 to xfinal
+%
+% trapz - Matlab built-in function that uses trapezoidal quadrature to integrate
+% a vector of data
+%
+nonrelint = trapz(x1s,y1s(1,:));
+relint = trapz(x2s,y2s(1,:));
+
+% This gives us the total mass of the star, but not a plot of mass vs. radius.
+% Need to define alpha and centdens (central density)
+%nonrelMass = 4*pi*alpha^3*centdens*nonrelint;
+%relMass = 4*pi*alpha^3*centdens*relint;

@@ -204,7 +204,9 @@
             P_c&=K\rho_c^{\frac{n+1}{n}}
         \end{align*}
 
-        Does this mean we need to know K as well?
-
+        Actually we can't use Simpson's rule without using interpolation because
+        it depends on having a continuous function (uses a f(xavg) in the
+        integral, which we of course wouldn't have in our vector). We could set
+        that up, or we could just use matlab's builtin trapezoidal integrator.
 
 \end{document}
