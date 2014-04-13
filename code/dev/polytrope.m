@@ -10,7 +10,7 @@ clc
 clear;
 close all;
 
-iter = 100000;
+iter = 10^5;
 h    = 0.001;
 y0   = [1.0 0];
 x0   = 0.0001;
@@ -23,8 +23,8 @@ f2   = @nonrel;
 [x2s,y2s] = lesolve(iter,f2,x0,y0,h,2);
 
 % Plot the solutions on the same graph
-hold all
 figure('Name','Comparison of non-relativistic and relativistic solutions','NumberTitle','off')
+hold all
 xlabel('\xi')
 ylabel('\theta(\xi)')
 
@@ -48,3 +48,21 @@ relint = trapz(x2s,y2s(1,:));
 % Need to define alpha and centdens (central density)
 %nonrelMass = 4*pi*alpha^3*centdens*nonrelint;
 %relMass = 4*pi*alpha^3*centdens*relint;
+
+
+% r1 - radius values for non-relativistic gas
+% r2 - radius values for relativistic gas
+% mr1 - M(r) (non-relativistic)
+% mr2 - M(r) (relativistic)
+%
+% Plot mass/radius relationship in terms of solar masses & kilometers
+% figure('Name','Mass - Radius Relation')
+% hold all
+% xlabel('R (km)')
+% ylabel('M (M_{sun}')
+%
+% plot(r1,mr1)
+% plot(r2,mr2)
+% legend('M_{nr}','M_r')
+% fprintf(1,'Enter to continue...\n');
+% pause;
