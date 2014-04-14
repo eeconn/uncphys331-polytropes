@@ -56,7 +56,7 @@ m2 = zeros(1,size(x2s,2));
 % Central density in solar mass/solar radius
 centdens1 = -1/(4*pi)/(1/x1s(end)*y1s(2,end));
 centdens2 = -1/(4*pi)/(1/x2s(end)*y2s(2,end));
-
+% Ratio of central density to average density (are we using this?)
 rhorat1 = 1/3*x1s(end)/-y1s(2,end);
 rhorat2 = 1/3*x2s(end)/-y2s(2,end);
 
@@ -84,10 +84,29 @@ Pc1 = K1*centdens1^(5/3);
 Pc2 = K2*centdens2^(4/3);
 
 % Calculate alpha:
-alpha1 = 2.5*Pc1/(4*pi*G*centdens1);
-alpha2 = 4*Pc2/(4*pi*G*centdens2);
+alpha1 = sqrt(2.5*Pc1/(4*pi*G*centdens1));
+alpha2 = sqrt(4*Pc2/(4*pi*G*centdens2));
 
 % Now we can do the mass/radius relation:
-R1 = alpha1*x1s(end);
-R2 = alpha2*x2s(end);
+r1 = alpha1.*x1s;
+r2 = alpha2.*x2s;
+M1=-4*pi*alpha1^3*centdens1.*r1.^2./alpha1^2.*y1s(2,:);
+M2=-4*pi*alpha1^3*centdens2.*r2.^2./alpha2^2.*y2s(2,:);
 
+% real data:
+Mreal = [0.46 0.50 0.501 0.53 0.59 0.59 0.604 0.70 0.74 1.000];
+Rreal = [0.13 0.011 0.0136 0.12 0.011 0.015 0.0096 0.0149 0.01245 0.0084];
+Merr  = [0.08 0.05 0.011 0.05 0.06 0.04 0.018 0.12 0.04 0.016];
+Rerr  = [0.002 0.001 0.0002 0.0004 0.001 0.001 0.0004 0.001 0.0004 0.0002];
+
+figure('Name','Mass/Radius Relation','NumberTitle','off')
+hold all
+xlabel ('M/M_{sun}')
+ylabel ('r')
+
+plot(M1,r1)
+plot(M2,r2)
+plot(Mreal,Rreal,'+')
+% Something's definitely wrong here, our calculated masses aren't even
+% approaching the masses in the provided data table
+legend('n=1.5 (non-relativistic)','n=3 (relativistic)','Actual data')
