@@ -14,8 +14,8 @@ iter = 10^5;
 h    = 0.001;
 y0   = [1.0 0];
 x0   = 0.0001;
-f1   = @rel;
-f2   = @nonrel;
+f1   = @nonrel;
+f2   = @rel;
 
 %==========================================
 
@@ -23,8 +23,8 @@ f2   = @nonrel;
 [x2s,y2s] = lesolve(iter,f2,x0,y0,h,2);
 
 % write to .csv files for use with external applications
-csvwrite('nonrel.csv',[x1s,y1s]);
-csvwrite('rel.csv',[x2s,y2s]);
+csvwrite('nonrel.csv',[x1s.',y1s(1,:).',y1s(2,:).']);
+csvwrite('rel.csv',[x2s.',y2s(1,:).',y2s(2,:).']);
 
 % Plot the solutions on the same graph
 figure('Name','Comparison of non-relativistic and relativistic solutions','NumberTitle','off')
@@ -39,39 +39,10 @@ fprintf(1,'Enter to continue...\n');
 pause;
 
 % Insert Mass-Radius Relationship and Plot
+m1 = zeros(1,size(x1s,2));
+m2 = zeros(1,size(x2s,2));
+% Central density in solar mass/solar radius
+centdens1 = -1/(4*pi)/(1/x1s(end)*y1s(2,end));
+centdens2 = -1/(4*pi)/(1/x2s(end)*y2s(2,end));
 
-% Take the definite integral of x^2 y^n dx from x0 to xfinal
-%
-% trapz - Matlab built-in function that uses trapezoidal quadrature to integrate
-% a vector of data
-%
-nonrelint = trapz(x1s,y1s(1,:));
-relint = trapz(x2s,y2s(1,:));
-
-% This gives us the total mass of the star, but not a plot of mass vs. radius.
-% Need to define alpha and centdens (central density)
-%nonrelMass = 4*pi*alpha(n,centdens,centP)^3*centdens*nonrelint;
-%relMass = 4*pi*alpha(n,centdens,centP)^3*centdens*relint;
-
-
-% r1 - radius values for non-relativistic gas
-% r2 - radius values for relativistic gas
-%r1 = alpha(n,centdens,centP)*x1s;
-%r2 = alpha(n,centdens,centP)*x2s;
-
-% mr1 - M(r) (non-relativistic)
-% mr2 - M(r) (relativistic)
-% For these - use LE derivation to get density function, then integrate for
-% each r value?
-%
-% Plot mass/radius relationship in terms of solar masses & kilometers
-% figure('Name','Mass - Radius Relation')
-% hold all
-% xlabel('R (km)')
-% ylabel('M (M_{sun}')
-%
-% plot(r1,mr1)
-% plot(r2,mr2)
-% legend('M_{nr}','M_r')
-% fprintf(1,'Enter to continue...\n');
-% pause;
+% still need to find alpha to get mass as a function of R.

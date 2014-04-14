@@ -12,6 +12,11 @@
 % h         intial step size
 % iinteg    indicates an integrator to use (left over from odesolverstep.m,
 %           we're not using it)
+% 
+% Outputs:
+% x         nx1 vector of xi values in the solution
+% y         nx2 matrix - row 1 is the solution (theta), row 2 is its 1st
+%           derivative
 %---------------------------------------
 % 2014-04-13 13:41 eeconn: Renamed from newodesolverstep.m
 
