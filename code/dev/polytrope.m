@@ -38,6 +38,18 @@ legend('\theta_{nr}(\xi), n=1.5','\theta_{r}(\xi), n=3')
 fprintf(1,'Enter to continue...\n');
 pause;
 
+% Density profile
+figure('Name','Density profiles for non-relativistic and relativistic polytropes','NumberTitle','off')
+hold all
+xlabel('\xi')
+ylabel('\rho/\rho_c')
+
+plot(x1s,y1s(1,:).^1.5)
+plot(x2s,y2s(1,:).^3)
+legend('n=1.5 (non-relativistic)','n=3 (relativistic)')
+fprintf(1,'Enter to continue...\n');
+pause;
+
 % Insert Mass-Radius Relationship and Plot
 m1 = zeros(1,size(x1s,2));
 m2 = zeros(1,size(x2s,2));
@@ -51,13 +63,13 @@ rhorat2 = 1/3*x2s(end)/-y2s(2,end);
 % still need to find alpha to get mass as a function of R.
 % Using pressure relation to find K
 % SI units:
-h = 6.6261*10^(-34);
-hc = 1.9864*10^(-25);
-Msun = 1.98855*10^(30);
-Rsun = 6.96340*10^8;
-Me = 1.7827*10^(-36);
-Mh = 1.6726*10^(-27);
-G = 6.67384*10^(-11);
+h = 6.6261*10^(-34);    %kg m^2/s
+hc = 1.9864*10^(-25);   %kg m^3/s^2
+Msun = 1.98855*10^(30); %kg
+Rsun = 6.96340*10^8;    %m
+Me = 9.1094*10^(-31);   %kg
+Mh = 1.6726*10^(-27);   %kg
+G = 6.67384*10^(-11);   %m^3/kgs^2
 
 K1 = h^2/(20*Me)*(3/pi)^(2/3)*(1/(2*Mh))^(5/3);
 K2 = hc/8*(3/pi)^(1/3)*(1/(2*Mh))^(4/3);
