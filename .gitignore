@@ -13,9 +13,10 @@
 *.toc
 
 ## Intermediate output files
-*.dvi
-*.ps
-*.eps
+# This may prevent upload of images imported in the graphicx package
+#*.dvi
+#*.ps
+#*.eps
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl

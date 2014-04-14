@@ -102,7 +102,7 @@ Rerr  = [0.002 0.001 0.0002 0.0004 0.001 0.001 0.0004 0.001 0.0004 0.0002];
 figure('Name','Mass/Radius Relation','NumberTitle','off')
 hold all
 xlabel ('M/M_{sun}')
-ylabel ('r')
+ylabel ('r/r_{sun}')
 
 plot(M1,r1)
 plot(M2,r2)
