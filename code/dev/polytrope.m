@@ -45,4 +45,37 @@ m2 = zeros(1,size(x2s,2));
 centdens1 = -1/(4*pi)/(1/x1s(end)*y1s(2,end));
 centdens2 = -1/(4*pi)/(1/x2s(end)*y2s(2,end));
 
+rhorat1 = 1/3*x1s(end)/-y1s(2,end);
+rhorat2 = 1/3*x2s(end)/-y2s(2,end);
+
 % still need to find alpha to get mass as a function of R.
+% Using pressure relation to find K
+% SI units:
+h = 6.6261*10^(-34);
+hc = 1.9864*10^(-25);
+Msun = 1.98855*10^(30);
+Rsun = 6.96340*10^8;
+Me = 1.7827*10^(-36);
+Mh = 1.6726*10^(-27);
+G = 6.67384*10^(-11);
+
+K1 = h^2/(20*Me)*(3/pi)^(2/3)*(1/(2*Mh))^(5/3);
+K2 = hc/8*(3/pi)^(1/3)*(1/(2*Mh))^(4/3);
+
+% Convert to solar units*
+K1 = K1*Msun^(2/3)/Rsun^4;
+K2 = K2*Msun^(1/3)/Rsun^3;
+G = G*Msun/Rsun^3;
+
+% Central pressure:
+Pc1 = K1*centdens1^(5/3);
+Pc2 = K2*centdens2^(4/3);
+
+% Calculate alpha:
+alpha1 = 2.5*Pc1/(4*pi*G*centdens1);
+alpha2 = 4*Pc2/(4*pi*G*centdens2);
+
+% Now we can do the mass/radius relation:
+R1 = alpha1*x1s(end);
+R2 = alpha2*x2s(end);
+
