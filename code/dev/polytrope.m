@@ -106,7 +106,8 @@ ylabel ('r/r_{sun}')
 
 plot(M1,r1)
 plot(M2,r2)
-plot(Mreal,Rreal,'+')
+errorbar(Mreal,Rreal,Rerr,'+')
 % Something's definitely wrong here, our calculated masses aren't even
-% approaching the masses in the provided data table
+% approaching the masses in the provided data table and the radii are much
+% larger. Central density seems to be correct.
 legend('n=1.5 (non-relativistic)','n=3 (relativistic)','Actual data')
