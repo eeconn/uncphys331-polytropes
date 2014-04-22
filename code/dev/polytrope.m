@@ -84,6 +84,9 @@ M2 = (CM2/Krel)^(1/(-1+(1/n2)));
 
 fprintf('\n')
 fprintf('Chandrasekhar mass M2 = %f\n',M2)
+fprintf('\n')
+fprintf(1,'Enter to continue...\n');
+pause;
 
 % Combining the pressures. I Just guessed for the constant 
 % (which was 1.38) which we needed to multiply by in order to make the plot
@@ -93,9 +96,33 @@ fprintf('Chandrasekhar mass M2 = %f\n',M2)
 % function after it crosses radius = 0 and also at the first value, which
 % is NaN.
 
+tol = 10^(-4);
+a = 0;
+b = 2;
+w = 1;
+M = 1.44;
+
+for i = 1:1000
+    
+    R = sqrt(((w.*(1./((G^2).*(M.^4))) - (5.4707*10^12)./(M.^(8/3)))./(4.7338*10^16)).*M.^(10/3));
+    tf = isreal(R);
+    
+    if R < tol && tf ~= 0
+        break
+    end
+    if tf == 1
+        b = w;
+        w = (w+a)/2;
+    end 
+    if tf == 0
+        a = w;
+        w = (w+b)/2;
+    end
+end
+ 
 M = (0:0.001:2);
 
-R = sqrt(((1.38.*(1./((G^2).*(M.^4))) - (5.4707*10^12)./(M.^(8/3)))./(4.7338*10^16)).*M.^(10/3));
+R = sqrt(((w.*(1./((G^2).*(M.^4))) - (5.4707*10^12)./(M.^(8/3)))./(4.7338*10^16)).*M.^(10/3));
 
 figure(3)
 plot(M,R,M1,R1)

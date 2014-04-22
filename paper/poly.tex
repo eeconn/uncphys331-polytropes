@@ -191,6 +191,7 @@ conditions.
 We started by rearranging the Lane-Emden equation to isolate the 2nd derivative:
 
 \begin{equation}
+    \label{eq:rearrle}
     \frac{d^2\theta}{d\xi^2}=-\frac{2}{\xi}\frac{d\theta}{d\xi}-\theta^n(\xi)
 \end{equation}
 
@@ -198,6 +199,7 @@ Then translating it into a system of first-order differential equations by
 defining a new variable \(\phi\equiv\frac{d\theta}{d\xi}\):
 
 \begin{equation}
+    \label{eq:sysle}
     \left\{\begin{array}{l}
         \phi = \frac{d\theta}{d\xi} \\
         \frac{d\phi}{d\xi} = -\frac{2}{\xi}\phi - \theta^n
@@ -207,6 +209,21 @@ defining a new variable \(\phi\equiv\frac{d\theta}{d\xi}\):
 This rearrangement allows us to use numerical integrators such as Euler's method
 or Runge-Kutta schemes, as well as making it clearer where we want to have the
 boundaries defined.
+
+We initially approached this as a boundary value problem with a free
+boundary\cite[p.756]{nrinc} (since we do not know the range of \(\xi\)
+beforehand, only that \(\theta(\xi)\) goes to zero at some point for \(n < 5\)).
+Difficulties with implementing a shooting method\cite[pp.474--482]{gsnm} by
+varying the initial value of \(\phi_0 =
+\frac{d\theta}{d\xi}\left|_{\xi=0}\right.\) with such a boundary led us to
+re-evaluate the physics and arrive at a set of conditions to define an initial
+value problem that can be solved with a fairly straightforward fourth-degree
+Runge-Kutta scheme\cite[pp.411--415]{gsnm}.
+
+The initial value of \(\frac{d\theta}{d\xi}\) must be zero, as there cannot
+physically be a cusp in the density function at the origin. However, this leads
+to a new issue: the value of the of 
+
 
 %------------------------------------------------
 
