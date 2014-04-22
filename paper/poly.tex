@@ -56,6 +56,8 @@
 \fancyhead[C]{Polytropes $\bullet$ April 21, 2014 } % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION
 %----------------------------------------------------------------------------------------
@@ -121,7 +123,7 @@ for pressure, temperature, and density.
     
 Later Swiss physicist Robert Emden formalized the model in the dimensionless
 differential equation that bears their names, the Lane-Emden equation, whose
-derivation can be found in the appendix.
+derivation can be found in Appendix A.
 
     \begin{equation}
         \label{eq:le}
@@ -129,19 +131,20 @@ derivation can be found in the appendix.
     \end{equation}
 
 where \(\xi\) is a dimensionless function of the radius, \(\theta\) is a
-dimensionless function relating density and pressure, and n is the
-\emph{polytropic index} of the fluid.  Solutions to this equation are called
-\emph{polytropes}.
+dimensionless function related to the
+density\footnote{\(\theta^n=\frac{\rho}{\rho_c}\), where \(\rho_c\) is the
+central density of the star}, and n is the \emph{polytropic
+index} of the fluid.  Solutions to this equation are called \emph{polytropes}.
 
 While Lane's polytropic simplification seemed unrealistic for most situations
 conceivable at the time, the vast simplification of its solutions over more
 realistic models proved a generous return on the trade with results that were
 still close enough to observed data to be very useful. Closed-form
-solutions\cite{leblanc2010} can
-be found readily found for polytropic indices \(n=0\) and \(n=1\), and with some
-algebraic substitution another one can be found for \(n=5\) (which has an
-infinite radius and will not be discussed further), and numerical solutions can
-be found using techniques known at the time of Lane's original publication.
+solutions\cite{leblanc2010} can be found readily found for polytropic indices
+\(n=0\) and \(n=1\), and with some algebraic substitution another one can be
+found for \(n=5\) (which has an infinite radius and will not be discussed
+further), and numerical solutions can be found using techniques known at the
+time of Lane's original publication.
 
 In the 20th century new utility was found for this model with the development of
 quantum mechanics and the discovery of \emph{white dwarfs}, stellar remnants
@@ -238,7 +241,8 @@ Taking the limit as \(\xi\rightarrow 0\), \(\theta'(\xi)\rightarrow -1/3\).
 However, the Lane-Emden equation is very sensitive to perturbations near the
 origin\cite[p.340]{hansen2004}, so a more stable way to treat the indeterminate
 origin is simply to offset the initial conditions by some small amount, starting
-the integration at \(0 < \xi \ll 1\).
+the integration at \(0 < \xi \ll 1\). We chose to begin iterations at
+\(\xi=0.0001\).
 
 \(\xi=0\) is defined as the center of the polytrope, and the dimensionless
 \(\theta\) ranges from 1 at the center to 0 at the surface, so the initial
@@ -263,12 +267,74 @@ integration and adjusts the step size based on the estimated error of each
 step}.
 
 After obtaining a solution to the Lane-Emden equation, we used the degenerate
-equations of state to calculate the relationship between the mass and the radius
-of the star for both the completely non-relativistic polytrope and the
+equations of state to calculate the relationship between the mass and the
+radius of the star for both the completely non-relativistic polytrope and the
 completely relativistic (see Appendix). The relativistic solution should have a
 nearly constant solution at a limiting mass of approximately
 \(1.44\mathrm{M}_{\odot}\), known as the Chandrasekhar mass; the maximum mass
-that can be supported by electron degeneracy pressure.
+that can be supported by electron degeneracy pressure. Beyond this mass, the
+star collapses into a neutron star.
+
+Finding the mass-radius relation proved more challenging than anticipated as it
+involved formulae from fluid mechanics and quantum mechanics, which none of the
+research team have yet studied formally. Turning the dimensionless radius and
+density functions into actual radii and masses hinged on the calculation of the
+\(\alpha\) factor\footnote{See the derivation of the Lane-Emden equation in
+Appendix A}
+
+\begin{equation}
+    \alpha = \frac{r}{\xi} = \sqrt{\frac{(n+1)P_c}{4\pi G\rho_c^2}}
+\end{equation}
+
+where \(P_c\) is the central pressure, \(\rho_c\) is the central density, and
+\(G=6.67\e{-11}\frac{\mathrm{Nm^2}}{\mathrm{kg^2}}\) is Newton's gravitational
+constant. Unfortunately, the quantities \(P_c\) and \(\rho_c\) are unknown.
+
+Instead, we focused on obtaining \(K\) in the polytropic equation of state
+(eq.~\ref{eq:polystate}, eq.~\ref{eq:degenstate}) from the result of the
+pressure integrals for degenerate fluids, presented without derivation:
+
+\begin{align}
+    P_{nr} &= K_1\rho^{5/3} &=
+    \frac{h^2}{20m_e}\left(\frac{3}{\pi}\right)^{2/3}\left(\frac{\rho}{m_H\mu_e}\right)^{5/3}
+    \\
+    P_r &= K_1\rho^{4/3} &=
+    \frac{hc}{8}\left(\frac{3}{\pi}\right)^{1/3}\left(\frac{\rho}{m_H\mu_e}\right)^{4/3}
+\end{align}
+
+where \(h\) is Planck's constant, \(m_e\) is the mass of an electron, \(m_H\) is
+the mass of a hydrogen atom, and \(\mu_e\) is a constant related to the
+composition of the matter. \(\mu_e\) for a white dwarf primarily composed of
+carbon and oxygen is given to be approximately 2.
+
+Initially we attempted to follow a procedure given by
+Dhillon\cite{website:dhillon} to find the mass as a function of radius
+
+\begin{equation}
+    M = -4\pi\alpha^3\rho_c\xi^2\frac{d\theta}{d\xi}
+\end{equation}
+
+however, we still do not know \(\rho_c\) for this relation or for the calculation
+of \(\alpha\), though at least we now know \(K\) for calculating the central
+pressure once we have this value.
+
+Dhillon uses a formula for the mean density of the Sun, which we used with the
+value of \(\rho_c/\langle \rho_c \rangle = -1/3 (\xi/\theta') \), which we \emph{can} obtain from the
+polytrope. However, this resulted in wildly inaccurate results as this model
+is accurate for main-sequence stars, not white dwarfs.
+
+We then went back to \emph{Stellar Interiors}\cite[p.336]{hansen2004} which
+gives a relation between \(K\), \(M\), and \(R\):
+
+\begin{equation}
+    \label{eq:kmr}
+    K = \left[\frac{4\pi}{\xi^{n+1}(-\theta')^{n-1}}\right]_{\xi_f}^{1/n}
+    \frac{G}{n+1}M^{1-1/n}R^{-1+3/n}
+\end{equation}
+
+and since we know K, we can solve this for \(R\) vs. \(M\). Note that for
+\(n=3\), the relativistic case, \(M\) does not depend on \(R\) and is instead a
+constant, which should be the Chandrasekhar mass.
 
 Actual white dwarfs have a mixed equation of state, approaching a completely
 relativistic degenerate gas at the core, where densities are high, and
@@ -301,8 +367,8 @@ relativistic (\(n=3\)) polytropes using a Runge-Kutta scheme in Matlab:
 
 
 Compared with the parameters outlined in \textit{Stellar
-Interiors}\cite{hansen2004} any discrepancies can be attributed to rounding
-differences.
+Interiors}\cite{hansen2004} any discrepancies are attributable to differences in
+significant figures.
 
 \begin{table}[H]
 \caption{Parameters for \(n=1.5\) and \(n=3\) polytropes\cite[p.340]{hansen2004}}
@@ -319,24 +385,75 @@ differences.
 \end{tabular}
 \end{table}
 
-Plots
+Plots of the solutions have the expected shape matching those found in the
+literature\cite{hansen2004}\cite{leblanc2010}\cite{jardetsky1958}:
 
-%------------------------------------------------
 \begin{figure}[H]
     \caption{Plot of \(n=1.5\) and \(n=3\) polytropes}
     \includegraphics[width=0.55\textwidth]{lesolution.pdf}
 \end{figure}
+
+The first physically meaningful relationship that is most readily found from the
+polytrope is the density profile of the star; the relationship between density
+and radius. Obtaining this relationship in dimensionless form is just a matter
+of using the definition of \(\theta\):
+
+    \begin{equation}
+        \theta^n=\frac{\rho}{\rho_c}
+    \end{equation}
+
+then plotting \(\theta^n\) vs. \(\xi\):
 
 \begin{figure}[H]
     \caption{Density relation}
     \includegraphics[width=0.55\textwidth]{density.pdf}
 \end{figure}
 
+Here we see that for a completely relativistic degenerate gas, the density
+initially falls off more quickly with increasing radius than for a
+non-relativistic gas, but this dropoff slows considerably near the stellar
+surface resulting in a radius almost twice as large as the non-relativistic
+case.
+
+
+A plot of our initial attempt at a mass/radius relation compared with actual
+data obtained from astronomical surveys\footnote{see Appendix B} shows the severe problems with the
+model:
+
+\begin{figure}[H]
+    \caption{Incorrect mass/radius relation}
+    \includegraphics[width=0.55\textwidth]{mr-data.pdf}
+\end{figure}
+
+We do not see the expected constant value for the relativistic mass, and the
+shapes of the relations do not match expectations (we should be seeing the
+radius \emph{decrease} with increasing mass).
+
+After fixing our procedure, we find the expected relation. The relativistic
+polytrope results in a constant mass of \(1.4373 \textrm{M}_{\odot}\), which rounds to
+the expected value of \(M_C=1.44 \textrm{M}_{\odot}\).
+
+We then combined the relativistic and non-relativistic models by forcing the
+radius to go to zero at the Chandrasekhar mass (values in this relation are from
+the non-relativistic and relativistic mass/radius relations, with \(w\) as a
+combination constant:
+
+\[ R=\sqrt{w\left(\frac{1}{G^2M_C^4}\right) -
+\frac{5.4707\e{12}}{M_C^(8/3)/4.7338\e{16}M_C^{10/3}}} \]
+
+We used a bisection algorithm to find the value of \(w\) that results in a root
+at \(M=M_C\).
+
+Plotting the combined model against observed data, we find that it fits better
+than the non-relativistic model at larger masses:
+
 \begin{figure}[H]
     \caption{Mass/radius relation for non-relativistic \& combined pressures
     with data}
     \includegraphics[width=0.55\textwidth]{mr_data_fixed.pdf}
 \end{figure}
+
+%------------------------------------------------
 
 \section{Discussion}
 
@@ -433,8 +550,8 @@ as a function of \(\theta(r)\):
             Since we defined \(\theta(r)\) as a dimensionless function, this
             equation requires that \(\frac{(n+1)P_c}{4\pi G\rho_c^2}\) has the
             dimension of length squared. For further simplification, we can
-            define a new variable \(\alpha\) that depends on the polytropic
-            index \(n\):
+            define a new constant factor \(\alpha\) that depends on the
+            polytropic index \(n\):
 
             \begin{equation}
                 \label{eq:alpha}
@@ -454,6 +571,32 @@ as a function of \(\theta(r)\):
             \begin{equation}
                 \frac{1}{\xi^2}\frac{d}{d\xi}\left(\xi^2\frac{d\theta(\xi)}{d\xi}\right)=-\theta^n(\xi)
             \end{equation}
+
+\section{Data Tables}
+
+\begin{table}[H]
+    \caption{Observed masses and radii for white dwarfs}
+    \centering
+    \begin{tabular}{c c c}
+    \toprule
+    %\multicolumn{2}{c}{Name} \\
+    %\cmidrule(r){1-2}
+    Name & Mass & Radius \\
+         & \(\mathrm{M}_{\odot}\) & \(\mathrm{R}_{\odot}\) \\
+    \midrule
+    Sirius B & \(1.000\pm0.016\) & \(0.0084\pm0.0002\) \\
+    Procyon B & \(0.604\pm0.018\) & \(0.0096\pm0.0004\) \\
+    40 Eri B & \(0.501\pm0.011\) & \(0.0136\pm0.0002\) \\
+    CD-38 10980 & \(0.74\pm0.04\) & \(0.01245\pm0.0004\) \\
+    W485A & \(0.59\pm0.04\) & \(0.0015\pm0.001\) \\
+    L268-92 & \(0.70\pm0.12\) & \(0.0149\pm0.001\) \\
+    L481-60 & \(0.53\pm0.05\) & \(0.1200\pm0.0004\) \\
+    G154-B5B & \(0.46\pm0.08\) & \(0.13\pm0.002\) \\
+    G181-B5B & \(0.50\pm0.05\) & \(0.011\pm0.001\) \\
+    G156-64 & \(0.59\pm0.06\) & \(0.011\pm0.001\) \\
+    \bottomrule
+    \end{tabular}
+\end{table}
 
 
 \end{document}
