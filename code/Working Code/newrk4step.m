@@ -1,5 +1,4 @@
-% Homework #7
-% function y = rk4step(y,f,x,h)
+% function y = newrk4step(y,f,x,h)
 %
 % Advancing solution by one single RK4 step.
 %
