@@ -181,12 +181,33 @@ white dwarfs.
 \section{Methods}
 
 The Lane-Emden equation is a 2nd-order nonlinear (for values of \(n\) other than
-0 or 1) differential equation in one variable (\(\xi\)). It is not analytically solvable in most cases,
-but solutions to initial and boundary value problems for this equation can be
-found using numerical integration.
+0 or 1) differential equation in one variable (\(\xi\)). It is not analytically
+solvable in most cases, but solutions to initial and boundary value problems for
+this equation can be found using numerical integration.
 
 The major challenge in solving the equation lay in identifying the boundary
 conditions. 
+
+We started by rearranging the Lane-Emden equation to isolate the 2nd derivative:
+
+\begin{equation}
+    \frac{d^2\theta}{d\xi^2}=-\frac{2}{\xi}\frac{d\theta}{d\xi}-\theta^n(\xi)
+\end{equation}
+
+Then translating it into a system of first-order differential equations by
+defining a new variable \(\phi\equiv\frac{d\theta}{d\xi}\):
+
+\begin{equation}
+    \left\{\begin{array}{l}
+        \phi = \frac{d\theta}{d\xi} \\
+        \frac{d\phi}{d\xi} = -\frac{2}{\xi}\phi - \theta^n
+    \end{array}\right.
+\end{equation}
+
+This rearrangement allows us to use numerical integrators such as Euler's method
+or Runge-Kutta schemes, as well as making it clearer where we want to have the
+boundaries defined.
+
 %------------------------------------------------
 
 \section{Results}
@@ -201,7 +222,7 @@ relativistic (\(n=3\)) polytropes using a Runge-Kutta scheme in Matlab:
 \toprule
 %\multicolumn{2}{c}{Name} \\
 %\cmidrule(r){1-2}
-\(n\) & \(\xi_f\) & \(\theta'(\xi_f)\) & \(\rho_c\) \\
+\(n\) & \(\xi_f\) & \(\theta'(\xi_f)\) & \(\rho_c/\langle \rho \rangle\) \\
 \midrule
 1.5 & 3.6838 & -0.2033 & 5.9907 \\
 3 & 6.8968 & -0.0424 & 54.1825 \\
@@ -215,13 +236,13 @@ Interiors}\cite{hansen2004} any discrepancies can be attributed to rounding
 differences.
 
 \begin{table}[H]
-\caption{Parameters for \(n=1.5\) and \(n=3\) polytropes\cite{hansen2004}}
+\caption{Parameters for \(n=1.5\) and \(n=3\) polytropes\cite[p.340]{hansen2004}}
 \centering
 \begin{tabular}{c | c c c}
 \toprule
 %\multicolumn{2}{c}{Name} \\
 %\cmidrule(r){1-2}
-\(n\) & \(\xi_f\) & \(\theta'(\xi_f)\) & \(\rho_c\) \\
+\(n\) & \(\xi_f\) & \(\theta'(\xi_f)\) & \(\rho_c/\langle \rho \rangle\) \\
 \midrule
 1.5 & 3.6538 & -0.20330 & 5.991 \\
 3 & 6.8969 & -0.04243 & 54.1825 \\
