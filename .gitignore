@@ -1,5 +1,8 @@
 ## Files to ignore in tracking/commit
 
+## VIM swap files
+*.swp
+
 ## Matlab tmp/sav files
 *.asv
 

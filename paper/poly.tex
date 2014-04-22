@@ -27,11 +27,12 @@
 
 \usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
 \usepackage{multicol} % Used for the two-column layout of the document
+\usepackage{appendix} % Use to add an appendix page to the document
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
 \usepackage{booktabs} % Horizontal rules in tables
 \usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
 \usepackage{hyperref} % For hyperlinks in the PDF
-\geometry{letterpaper}
+\geometry{letterpaper} % Scale for printing on 8.5"x11" paper
 
 \usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
 \usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
@@ -127,7 +128,7 @@ derivation can be found in the appendix.
 
 where \(\xi\) is a dimensionless function of the radius, \(\theta\) is a
 dimensionless function relating density and pressure, and n is the
-\emph{polytropic index} of the fluid. Solutions to this equation are called
+\emph{polytropic index} of the fluid.  Solutions to this equation are called
 \emph{polytropes}.
 
 While Lane's polytropic simplification seemed unrealistic for most situations
@@ -146,28 +147,46 @@ composed of extremely dense gas. The electron density in white dwarfs approaches
 the density of available quantum energy states; and since the Pauli exclusion
 principle disallows multiple electrons from occupying the same quantum
 state\cite[p.216]{griffithsqm}, this results in what is called \emph{electron
-degeneracy pressure}\cite[pp.217-218]{griffithsqm} which is the main force
-opposing the dwarf's own gravity since white dwarfs are no longer actively
-undergoing fusion. White dwarfs are therefore composed of nearly fully
-\emph{degenerate matter}. Serendipitously, fully degenerate matter has the
-following equation of state:\cite[pp.163-166]{hansen2004}
+degeneracy pressure} which is the main force opposing the dwarf's own gravity
+since white dwarfs are no longer actively undergoing
+fusion.\cite[pp.163--166]{hansen2004} White dwarfs are therefore composed of
+nearly fully \emph{degenerate matter}. Serendipitously, fully degenerate matter
+has the following equation of state:
 
     \begin{equation}
         \label{eq:degenstate}
         P(r)=K\rho(r)^{\gamma}
     \end{equation}
 
-identical in form to eq.~\ref{eq:polystate}, \emph{i.e.}, it is a polytropic
-gas!
+identical in form to eq.~\ref{eq:polystate}, \emph{i.e.}, it is a polytropic gas
+with \(\gamma\equiv 1+\frac{1}{n}\)\footnote{not to be confused with the
+relativistic \(\gamma\)--factor}!
 
+White dwarfs are therefore ideally suited to modeling with polytropes. The
+value of the polytropic index is found from fluid and quantum mechanical
+relations. In fact, there are two polytropic indices that apply for degenerate
+gases; in lower energy states the electrons have non-relativistic momenta and
+have a \(\gamma\) index of \(5/3\), which corresponds to a polytropic index of
+\(n=1.5\). As density increases, more of the electrons occupy higher energy
+states with higher momenta, and relativistic effects prevail, resulting in a
+\(\gamma\) index of \(4/3\), corresponding to a polytropic index of \(n=3\). 
+
+
+We used numerical integration methods to solve the Lane-Emden equation for these
+polytropic indices, found the relationship between the mass and radius of the
+resulting polytropes, and compared results with observed data for several known
+white dwarfs.
 %------------------------------------------------
 
 \section{Methods}
 
-\begin{compactitem}
-\item 
-\end{compactitem}
+The Lane-Emden equation is a 2nd-order nonlinear (for values of \(n\) other than
+0 or 1) differential equation in one variable (\(\xi\)). It is not analytically solvable in most cases,
+but solutions to initial and boundary value problems for this equation can be
+found using numerical integration.
 
+The major challenge in solving the equation lay in identifying the boundary
+conditions. 
 %------------------------------------------------
 
 \section{Results}
@@ -222,6 +241,112 @@ differences.
 \bibliographystyle{abbrv}
 \bibliography{poly}
 %----------------------------------------------------------------------------------------
+%   APPENDICES
+%----------------------------------------------------------------------------------------
+\appendix
+\appendixpage
+\section{Derivation of the Lane-Emden Equation\cite[pp.176--179]{leblanc2010}} 
+
+The Lane-Emden equation can be derived multiple ways; one way is from the
+equations for hydrostatic equilibrium and mass conservation:
+
+\begin{equation}
+    \label{eq:hydroeq}
+    \frac{dP(r)}{dr} = -\frac{\rho(r)GM(r)}{r^2}
+    \end{equation}
+
+    \begin{equation}
+    \label{eq:masscons}
+    dM(r)=4\pi r^2\rho(r)dr \rightarrow \frac{dM(r)}{dr} = 4\pi r^2\rho(r)
+    \end{equation}
+
+where \(P(r)\) is the gas pressure as a function of radial distance from the
+center of the distribution, \(\rho(r)\) is the gas density, \(G\) is Newton's
+gravitational constant, and \(M(r)\) is the mass enclosed within a sphere of
+radius \(r\).
+
+These equations can be related by multiplying eq.~\ref{eq:hydroeq} by
+\(r^2/\rho\):
+
+\[ \frac{r^2}{\rho(r)}\frac{dP(r)}{dr} = -\frac{r^2}{\rho(r)}
+\frac{\rho(r)GM(R)}{r^2} \]
+
+then differentiating with respect to \(r\):
+            
+\[
+\frac{d}{dr}\left(\frac{r^2}{\rho(r)}\frac{dP(r)}{dr}\right)=-G\frac{dM(r)}{dr}
+\]
+
+Substituting in eq.~\ref{eq:masscons} we obtain Poisson's equation for gravitational potential:
+
+\begin{equation}
+    \label{eq:poisson}
+    \frac{1}{r^2} \frac{d}{dr} \left( \frac{r^2}{\rho(r)}\frac{dP(r)}{dr} \right) = -4 \pi G\rho(r)
+\end{equation}
+
+Now, using the polytropic state equation:
+
+\begin{equation}
+    \label{eq:polytropstate}
+    P=K\rho^{\frac{n+1}{n}}
+\end{equation}
+
+where \(n\) is called the \textit{polytropic index} and \(K\) is a constant, and
+defining a dimensionless function \(\theta(r)\):
+
+\begin{equation}
+    \label{eq:thetar}
+    \rho(r)=\rho_c\theta^n{r}
+\end{equation}
+
+where \(\rho_c\) is the central density of the star, we can rewrite the pressure
+as a function of \(\theta(r)\):
+
+            \[
+                P(r)=K\rho_c^{\frac{n+1}{n}}\theta^{n+1}(r)=P_c\theta^{n+1}(r)
+            \]
+
+            where \(P_c=K\rho_c^{\frac{n+1}{n}}\) is the central pressure of the
+            star. Substituting this into eq.~\ref{eq:poisson}:
+
+            \[
+                K\rho_c^{\frac{n+1}{n}}\frac{1}{r^2}\frac{d}{dr}\left(\frac{r^2}{\rho_c\theta^n(r)}\frac{d\theta^{n+1}(r)}{dr}\right)=-4\pi
+                G\rho_c\theta^n(r)
+            \]
+
+            This can be simplified a bit by realizing that
+            \(\frac{d\theta^{n+1}(r)}{dr}=(n+1)\theta^n(r)\frac{d\theta(r)}{dr}\):
+
+            \begin{equation}
+                \label{eq:simplpois}
+                \frac{(n+1)P_c}{4\pi
+                G\rho_c^2}\frac{1}{r^2}\frac{d}{dr}\left(r^2\frac{d\theta(r)}{dr}\right)=-\theta^n(r)
+            \end{equation}
+
+            Since we defined \(\theta(r)\) as a dimensionless function, this
+            equation requires that \(\frac{(n+1)P_c}{4\pi G\rho_c^2}\) has the
+            dimension of length squared. For further simplification, we can
+            define a new variable \(\alpha\) that depends on the polytropic
+            index \(n\):
+
+            \begin{equation}
+                \label{eq:alpha}
+                \alpha^2=\frac{(n+1)P_c}{4\pi G\rho_c^2}
+            \end{equation}
+
+            and a new dimensionless radius \(\xi\):
+
+            \begin{equation}
+                \label{eq:xi}
+                \xi=\frac{r}{\alpha}
+            \end{equation}
+
+            Substituting this \(\xi\) into eq.~\ref{eq:simplpois} we finally
+            obtain the Lane-Emden equation:
+
+            \begin{equation}
+                \frac{1}{\xi^2}\frac{d}{d\xi}\left(\xi^2\frac{d\theta(\xi)}{d\xi}\right)=-\theta^n(\xi)
+            \end{equation}
 
 
 \end{document}
