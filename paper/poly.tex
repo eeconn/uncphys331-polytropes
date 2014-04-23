@@ -56,7 +56,8 @@
 \fancyhead[C]{Polytropes $\bullet$ April 21, 2014 } % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
-\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}} % Provide a scientific notation command
+\renewcommand{\thefootnote}{\fnsymbol{footnote}} % Change the footnote format to a sequence of symbols (to prevent the footnotes from being confused with exponents)
 
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION
@@ -160,9 +161,13 @@ time of Lane's original publication.
 
 In the 20th century new utility was found for this model with the development of
 quantum mechanics and the discovery of \emph{white dwarfs}, stellar remnants
-composed of extremely dense gas. The electron density in white dwarfs approaches
-the density of available quantum energy states; and since the Pauli exclusion
-principle disallows multiple electrons from occupying the same quantum
+composed of extremely dense gas. White dwarfs are the ``corpses'' of red giants
+that are not massive enough to ignite carbon fusion when they run out of fusible
+helium. Once fusion ceases, they no longer generate thermal energy to support
+themselves against gravitational collapse, so the material in the star
+collapses. The electron density in this collapse approaches the density of
+available quantum energy states; and since the Pauli exclusion principle
+disallows multiple electrons from occupying the same quantum
 state\cite[p.216]{griffithsqm}, this results in what is called \emph{electron
 degeneracy pressure} which is the main force opposing the dwarf's own gravity
 since white dwarfs are no longer actively undergoing
@@ -284,8 +289,11 @@ radius of the star for both the completely non-relativistic polytrope and the
 completely relativistic (see Appendix). The relativistic solution should have a
 nearly constant solution at a limiting mass of approximately
 \(1.44\mathrm{M}_{\odot}\), known as the Chandrasekhar mass\cite{chandra1939}; the maximum mass
-that can be supported by electron degeneracy pressure. Beyond this mass, the
-star collapses into a neutron star.
+that can be supported by electron degeneracy pressure. If a white dwarf exceeds
+this mass, for example, through matter transfer in a binary system, the star
+begins to collapse, driving the temperature up to the ignition temperature for
+carbon fusion, and may experience a runaway reaction that triggers an explosion.
+This event is classified as a Type 1a supernova.
 
 Finding the mass-radius relation proved more challenging than anticipated as it
 involved formulae from fluid mechanics and quantum mechanics, which none of the
@@ -309,9 +317,11 @@ pressure integrals for degenerate fluids, presented without derivation:
 \begin{align}
     P_{nr} &= K_1\rho^{5/3} &=
     \frac{h^2}{20m_e}\left(\frac{3}{\pi}\right)^{2/3}\left(\frac{\rho}{m_H\mu_e}\right)^{5/3}
+    \label{eq:K1}
     \\
     P_r &= K_1\rho^{4/3} &=
     \frac{hc}{8}\left(\frac{3}{\pi}\right)^{1/3}\left(\frac{\rho}{m_H\mu_e}\right)^{4/3}
+    \label{eq:K2}
 \end{align}
 
 where \(h\) is Planck's constant, \(m_e\) is the mass of an electron, \(m_H\) is
@@ -331,7 +341,7 @@ of \(\alpha\), though at least we now know \(K\) for calculating the central
 pressure once we have this value.
 
 Dhillon uses a formula for the mean density of the Sun, which we used with the
-value of \(\rho_c/\langle \rho_c \rangle = -1/3 (\xi/\theta') \), which we \emph{can} obtain from the
+value of \(\rho_c/\langle \rho \rangle = -1/3 (\xi/\theta') \), which we \emph{can} obtain from the
 polytrope. However, this resulted in wildly inaccurate results as this model
 is accurate for main-sequence stars, not white dwarfs.
 
@@ -351,9 +361,12 @@ constant, which should be the Chandrasekhar mass.
 Actual white dwarfs have a mixed equation of state, approaching a completely
 relativistic degenerate gas at the core, where densities are high, and
 completely non-relativistic at the surface where densities approach zero. We
-attempted a purely mathematical model of this mixed state equation using a
-bisection algorithm to find a combination constant that results in the radius
-going to zero at the Chandrasekhar mass.
+approximate this equation with the relation 
+
+\begin{equation}
+    \label{eq:mixedstate}
+    \frac{1}{P^2} = \frac{1}{P_{nr}^2}+\frac{1}{P_r^2}
+\end{equation}
 
 %------------------------------------------------
 
@@ -445,16 +458,27 @@ After fixing our procedure, we find the expected relation. The relativistic
 polytrope results in a constant mass of \(1.4373 \textrm{M}_{\odot}\), which rounds to
 the expected value of \(M_C=1.44 \textrm{M}_{\odot}\).
 
-We then combined the relativistic and non-relativistic models by forcing the
-radius to go to zero at the Chandrasekhar mass (values in this relation are from
-the non-relativistic and relativistic mass/radius relations, with \(w\) as a
-combination constant:
+We then made a weighted combination of the relativistic and non-relativistic
+models by forcing the radius to go to zero at the Chandrasekhar mass (the radius
+is effectively zero at this point because the degeneracy pressure the polytrope
+models gives way and the ensuing behavior is no longer governed by the
+Lane-Emden relation.)
 
-\[ R=\sqrt{w\left(\frac{1}{G^2M_C^4}\right) -
-\frac{5.4707\e{12}}{M_C^(8/3)/4.7338\e{16}M_C^{10/3}}} \]
+Using our initial approximation of the combined equation of state
+(eq.~\ref{eq:mixedstate}), and recalling the non-relativistic and relativistic
+pressures we used to calculate \(K\) for each state
+(eqs.~\ref{eq:K1},~\ref{eq:K2}, we obtained the following function for the
+radius in terms of mass using a computer algebra system:
 
-We used a bisection algorithm to find the value of \(w\) that results in a root
-at \(M=M_C\).
+\begin{equation}
+    \label{eq:mixedmr}
+    R = \sqrt{ \left[ \frac{ w \left( \frac{1}{G^2 M^4}\right) -
+    \frac{5.4707\e{12}}{M^{8/3}}}{4.7338\e{16}}\right]M^{10/3} }
+\end{equation}
+
+\(w\) is a weighting factor determining the weight given to the non-relativistic
+pressure. We used a bisection algorithm to find the value of \(w\) that results in a root
+at \(M=M_C\); that value is \(w=1.3835\).
 
 Plotting the combined model against observed data, we find that it fits better
 than the non-relativistic model at larger masses:
@@ -469,8 +493,44 @@ than the non-relativistic model at larger masses:
 
 \section{Discussion}
 
-We experienced multiple challenges during the course of this project,
-mathematical, computational, and physical.
+    We experienced mathematical, computational, and physical challenges during
+    the course of this project. As stated previously our first challenge arose
+    when determining the boundary conditions for our integrator, which presented
+    the issue of a singularity in the center of the star and a free boundary
+    condition at the surface. In order to resolve these problems, we used an
+    approximation at the center and a tolerance condition at the surface. We
+    also assumed that white dwarfs are isotherms, and that the temperature
+    within does not affect the density of the star. Finally, many of the
+    constants used for establishing the mass-radius relationship were truncated
+    in order to eliminate algebraic errors and for simplicity in the code
+    itself. Because the model was already based on approximate equations of
+    state, these new approximations only make our data less realistic. These
+    approximations are prevalent when we look at the deviation of our model from
+    actual masses and radii of white dwarfs taken from astronomical surveys. In
+    particular, the mass-radius relationships of L481-60 and G154-B5B do not
+    correlate with our data at all. 
+
+    Although we implemented a hybrid condition consisting of a combination of
+    pressures for the final mass-radius relationship, more accurate
+    approximations and models could be used to improve our results. For example,
+    a hybrid model consisting of solutions for several polytropic indices
+    correlated with different layers of the white dwarf could be used in order
+    to obtain a more accurate representaion of the star. We also propose using a
+    better approximation for the density at the center of the star, such as
+    actually implementing a Taylor expansion into our model, which may allow us
+    to better correlate our data with that of the astronomical surveys.
+
+    Lastly, due to inexperience of the research team, much of the work in Matlab
+    lacks robustness and is inefficient. This leads us to believe that the
+    actual code itself may fail when finding solutions for other types of stars
+    that require different polytropic indices.
+
+    Despite our efforts and efforts of other researchers, stellar models have
+    proven to be extremely difficult and are typically developed using a large
+    number of approximations. The astrophysics community still remains without
+    an accurate and complete  3-dimensional model of a star, largely due to the
+    the complicated nature of matter and thermodynamic properties found within
+    stars.
 
 \end{multicols}
 %----------------------------------------------------------------------------------------
